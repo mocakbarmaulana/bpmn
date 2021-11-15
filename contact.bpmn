@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1lg6scb" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.10.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
+  <bpmn:process id="ContactUs" name="Contact Us" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="Memasukan Pesan">
+      <bpmn:outgoing>Flow_05utdjo</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="validate" name="Admin Memvalidasi pesan">
+      <bpmn:incoming>Flow_05utdjo</bpmn:incoming>
+      <bpmn:outgoing>Flow_1jgcfyu</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_1v04fgi" default="validate.no">
+      <bpmn:incoming>Flow_1jgcfyu</bpmn:incoming>
+      <bpmn:outgoing>validate.yes</bpmn:outgoing>
+      <bpmn:outgoing>validate.no</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1jgcfyu" sourceRef="validate" targetRef="Gateway_1v04fgi" />
+    <bpmn:sequenceFlow id="validate.yes" name="Pesan Penting" sourceRef="Gateway_1v04fgi" targetRef="reply">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${decision == "yes"}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:userTask id="reply" name="Admin membalas Pesan user">
+      <bpmn:incoming>validate.yes</bpmn:incoming>
+      <bpmn:outgoing>Flow_08jtq5o</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="validate.no" name="Spam" sourceRef="Gateway_1v04fgi" targetRef="Event_1h3k9xh" />
+    <bpmn:endEvent id="Event_0sk1bwn">
+      <bpmn:incoming>Flow_08jtq5o</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_08jtq5o" sourceRef="reply" targetRef="Event_0sk1bwn" />
+    <bpmn:endEvent id="Event_1h3k9xh">
+      <bpmn:incoming>validate.no</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_05utdjo" sourceRef="StartEvent_1" targetRef="validate" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="ContactUs">
+      <bpmndi:BPMNEdge id="Flow_1jgcfyu_di" bpmnElement="Flow_1jgcfyu">
+        <di:waypoint x="450" y="117" />
+        <di:waypoint x="605" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ixlbhr_di" bpmnElement="validate.yes">
+        <di:waypoint x="655" y="117" />
+        <di:waypoint x="810" y="117" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="697" y="99" width="72" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0olj30x_di" bpmnElement="validate.no">
+        <di:waypoint x="630" y="142" />
+        <di:waypoint x="630" y="252" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="645" y="194" width="30" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_08jtq5o_di" bpmnElement="Flow_08jtq5o">
+        <di:waypoint x="910" y="117" />
+        <di:waypoint x="1072" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_05utdjo_di" bpmnElement="Flow_05utdjo">
+        <di:waypoint x="208" y="117" />
+        <di:waypoint x="350" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_0uu5cjz_di" bpmnElement="validate">
+        <dc:Bounds x="350" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1v04fgi_di" bpmnElement="Gateway_1v04fgi" isMarkerVisible="true">
+        <dc:Bounds x="605" y="92" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1qk19uu_di" bpmnElement="reply">
+        <dc:Bounds x="810" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0sk1bwn_di" bpmnElement="Event_0sk1bwn">
+        <dc:Bounds x="1072" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1h3k9xh_di" bpmnElement="Event_1h3k9xh">
+        <dc:Bounds x="612" y="252" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="172" y="99" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="160" y="142" width="61" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
